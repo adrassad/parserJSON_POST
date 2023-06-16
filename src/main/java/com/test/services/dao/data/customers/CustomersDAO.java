@@ -33,9 +33,10 @@ public class CustomersDAO implements ICustomersDAO {
 	}
 
 	public Customer getCustomer(String id) {
-		if ((templCustomer
-				.queryForInt("Select count(1) FROM customer WHERE id = '" + id
-						+ "'")) > 0) {
+		List<Map<String, Object>> cnt = templCustomer
+				.queryForList("Select count(1) AS cnt FROM customer WHERE id = '" + id
+						+ "'");
+		if (cnt.size() > 0) {
 			Customer customer = (Customer) templCustomer.queryForObject(
 					"SELECT * FROM customer WHERE id = '" + id + "'",
 					new RowMapper<Customer>() {
